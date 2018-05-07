@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/mainlayout"
+    tools:context="com.example.anton.calculator.MainCalculatorActivity"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10pt"
+        >
+
+
+        <EditText
+            android:id="@+id/Num1"
+            android:layout_width="60dp"
+            android:layout_height="64dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Inputnumber"
+            android:inputType="numberDecimal"
+            />
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="64dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Inputnumber"
+            android:inputType="numberDecimal"
+            android:id="@+id/Num2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10pt">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add"
+            android:id="@+id/button_plus"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/mult"
+            android:id="@+id/button_Mult"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/div"
+            android:id="@+id/button_Div"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sub"
+            android:id="@+id/button_Sub"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="TextView"
+        android:textSize="12pt"
+        android:layout_margin="5pt"
+        android:gravity="center_horizontal"/>
+
+</LinearLayout>
