@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quanity_string"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp">
+    <Button
+        android:id="@+id/button_plus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:text="@string/plus_string"
+        android:onClick="increment"
+        android:layout_marginRight="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+      android:layout_marginRight="8dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:id="@+id/quantity_text_view"
+        />
+    <Button
+        android:layout_width="48dp"
+        android:layout_height="49dp"
+        android:text="@string/sub_string"
+        android:id="@+id/button_sub"
+
+        android:onClick="decrement"
+        />
+</LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$10"
+        android:id="@+id/price_text_view"
+        android:textColor="@android:color/black"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/order_string"
+        android:textAllCaps="true"
+        android:layout_marginTop="16dp"
+        android:onClick="submitOrder"
+        />
+
+</LinearLayout>

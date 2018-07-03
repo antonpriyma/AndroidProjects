@@ -24,13 +24,17 @@ public class MainCalculatorActivity extends AppCompatActivity {
     private EditText Num1;
     private EditText Num2;
     private TextView tv;
-    private LinearLayout Mainlayout;
+    public LinearLayout Mainlayout;
+
+    public LinearLayout getMainlayout() {
+        return Mainlayout;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.calcmenu,menu);
         return true;
-    }
+    }//Иницилизация кнопки меню
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -45,9 +49,8 @@ public class MainCalculatorActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
-
         return true;
-    }
+    }//присваивание кнопкам ссылок на действия
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

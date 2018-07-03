@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">СounterApp</string>
+    <string name="quanity_string">quanity</string>
+    <string name="plus_string">+</string>
+    <string name="sub_string">-</string>
+    <string name="order_string">order</string>
+</resources>
