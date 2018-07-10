@@ -1,5 +1,6 @@
 package com.example.anton.remindme;
 
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,15 +11,21 @@ import android.widget.Toolbar;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int Layout=R.layout.activity_main;
     private android.support.v7.widget.Toolbar toolBar;
+    private DrawerLayout drawerLayout;
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(Layout);
         InitToolBar();
+        InitNavigationView();
     }
 
     private void InitToolBar(){
@@ -29,4 +36,9 @@ public class MainActivity extends AppCompatActivity {
         //setSupportActionBar(toolBar);
 
     }
+
+    private void InitNavigationView() {
+        ;
+    }
+
 }
