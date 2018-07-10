@@ -4,11 +4,11 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:id="@+id/activity_main"
     android:background="@color/mainBackground"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
     
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -33,6 +33,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:menu="@menu/navigation_menu"
+        app:headerLayout="@layout/bar_header_layout"
+
          />
 
 

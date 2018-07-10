@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InitNavigationView() {
-        ;
+        drawerLayout=(DrawerLayout)findViewById(R.id.activity_main);
+
     }
 
 }
