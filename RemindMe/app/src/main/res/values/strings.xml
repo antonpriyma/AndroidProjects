@@ -2,4 +2,6 @@
     <string name="app_name" translatable="false">RemindMe Beta</string>
     <string name="search_string" translatable="false">Search</string>
     <string name="string_notification">Notification</string>
+    <string name="open_string">Open</string>
+    <string name="close_string">Close</string>
 </resources>
