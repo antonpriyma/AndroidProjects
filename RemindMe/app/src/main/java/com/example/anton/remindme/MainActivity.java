@@ -1,19 +1,19 @@
 package com.example.anton.remindme;
 
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 import com.example.anton.remindme.adapter.TabsPagerFragmentAdapter;
-import com.example.anton.remindme.fragment.ExampleFragment;
+import com.example.anton.remindme.fragment.IdeasFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private android.support.v7.widget.Toolbar toolBar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
+    private FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -44,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void InitActionButton(){
+        floatingActionButton=(FloatingActionButton)findViewById(R.id.plus_button);
+        floatingActionButton.setBackgroundColor(Color.parseColor("#1976D2"));
+    }//разобраться
+    
+
     private void InitNavigationView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
         //Кнопка вызова NavigationView
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 switch (item.getItemId()){
                     case R.id.actionNotificationItem:
-                        ShowNotificationTab();
+                        ShowHistoryTab();
                 }
                 return true;
             }
@@ -71,14 +79,15 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager)findViewById(R.id.view_pager);//Разметка
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);//Разметка Бара выбора
         TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());//Обработчик выбора
-        adapter.addFragment(new ExampleFragment(),"1");//Example fragment - просто xml разметка
-        adapter.addFragment(new ExampleFragment(),"Notification");
-        adapter.addFragment(new ExampleFragment(),"3");
+        adapter.addFragment(new IdeasFragment(),getString(R.string.history_string));//Example fragment - просто xml разметка
+        adapter.addFragment(new IdeasFragment(),getString(R.string.todo_string));
+        adapter.addFragment(new IdeasFragment(),getString(R.string.ideas_string));
+        adapter.addFragment(new IdeasFragment(),getString(R.string.birthday_string));
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void ShowNotificationTab(){
+    private void ShowHistoryTab(){
         viewPager.setCurrentItem(1);
     }
 }

@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.anton.remindme.fragment.ExampleFragment;
-
 import java.util.ArrayList;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
