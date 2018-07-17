@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.example.anton.remindme.adapter.TabsPagerFragmentAdapter;
 import com.example.anton.remindme.dto.RemindDTO;
+import com.example.anton.remindme.fragment.AbstractFragment;
 import com.example.anton.remindme.fragment.HistoryFragment;
 import com.example.anton.remindme.fragment.IdeasFragment;
 
@@ -86,9 +87,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);//Разметка Бара выбора
         TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(this,getSupportFragmentManager());//Обработчик выбора
         adapter.addFragment(historyFragment,getString(R.string.history_string));//Example fragment - просто xml разметка
-        //adapter.addFragment(new IdeasFragment(),getString(R.string.todo_string));
-        //adapter.addFragment(new IdeasFragment(),getString(R.string.ideas_string));
-       // adapter.addFragment(new IdeasFragment(),getString(R.string.birthday_string));
+        adapter.addFragment(new AbstractFragment(),getString(R.string.todo_string));
+        adapter.addFragment(new AbstractFragment(),getString(R.string.ideas_string));
+        adapter.addFragment(new AbstractFragment(),getString(R.string.birthday_string));
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
