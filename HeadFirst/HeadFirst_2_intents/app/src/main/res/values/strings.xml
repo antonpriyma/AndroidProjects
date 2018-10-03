@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HeadFirst_2_intents</string>
+    <string name="send_message">Send message</string>
+    <string name="title_activity_recieve_message">RecieveMessageActivity</string>
+</resources>
