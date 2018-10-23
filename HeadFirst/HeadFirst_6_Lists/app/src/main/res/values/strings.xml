@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HeadFirst_6_Lists</string>
+    <string-array name="coffee_names">
+        <item>Menu</item>
+        <item>Cappuccino</item>
+        <item>Filter</item>
+    </string-array>
+</resources>
