@@ -2,6 +2,7 @@ package com.example.anton.rk_1;
 
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,8 +23,10 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class RecyclerFragment extends Fragment {
-    private static final int MIN_COLUMNS = 3;
+    private static final int COLUMNS = 3;
+    private static final int COLUMNS_LAND = 4;
     private GridAdapter adapter;
+    private GridLayoutManager layoutManager;
 
 
     public RecyclerFragment() {
@@ -37,28 +40,18 @@ public class RecyclerFragment extends Fragment {
         // Inflate the layout for this fragment
         View layout= inflater.inflate(R.layout.fragment_recycler, container, false);
         RecyclerView recyclerView=layout.findViewById(R.id.recyclerView);
-        final int columns=3;
-        List<Item> items=buildItemList(columns);
-        adapter=new GridAdapter(items);
+        adapter=new GridAdapter();
+        if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
+             layoutManager = new GridLayoutManager(getContext(), COLUMNS_LAND);
+        }else {
+             layoutManager = new GridLayoutManager(getContext(), COLUMNS);
+        }
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), columns);
-        //layoutManager.setSpanSizeLookup(spanSizeLookup);
         recyclerView.setAdapter(adapter);
-
         recyclerView.setLayoutManager(layoutManager);
-
         return layout;
     }
 
-    public List<Item> buildItemList(int columns) {
-        List<Item> items = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-
-            items.add(new Item(i));
-        }
-
-        return items;
-    }
 
 
 
