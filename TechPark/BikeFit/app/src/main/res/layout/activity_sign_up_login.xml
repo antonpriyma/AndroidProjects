@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpLoginActivity">
+
+    <FrameLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="490dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/frame_layout" >
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+    </FrameLayout>
+
+   <Button
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+       android:layout_below="@id/frame_layout"
+       android:layout_margin="8dp"
+       android:layout_centerHorizontal="true"
+       android:background="@color/white"
+       android:text="@string/continue_with_google"
+       android:textSize="14sp"
+       style="@style/ButtonWhite"
+       android:id="@+id/signup_google_button"
+       android:drawableLeft="@mipmap/google_icon" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/signup_google_button"
+        android:layout_margin="8dp"
+        android:background="@color/white"
+        android:text="@string/sign_up_with_email"
+        android:textSize="14sp"
+        style="@style/ButtonWhite"
+        android:id="@+id/signup_email_button"
+        android:drawableLeft="@mipmap/email_icon"
+      />
+
+    <TextView
+        android:id="@+id/log_in_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_email_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/log_in"
+        android:textColor="@color/textColor"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

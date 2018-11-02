@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "907747285190",
+    "firebase_url": "https://bikefit-f46a6.firebaseio.com",
+    "project_id": "bikefit-f46a6",
+    "storage_bucket": "bikefit-f46a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907747285190:android:592580c2ee5f74fb",
+        "android_client_info": {
+          "package_name": "com.example.anton.bikefit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907747285190-ogou59fknaonc1kvjsv4uq8nj8sjjove.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anton.bikefit",
+            "certificate_hash": "fb6b768e3d6d4a6129b8a905b397f102cf39e179"
+          }
+        },
+        {
+          "client_id": "907747285190-udpskp52i85ld8cosoprdkpi9am9gl3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCb1mvSeoJL2k4XrNQqpG8qusBZ2PuJLY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907747285190-udpskp52i85ld8cosoprdkpi9am9gl3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
