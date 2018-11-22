@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BikeFit</string>
+    <string name="app_name">RemindMe Beta</string>
     <string name="register">Sign Up</string>
     <string name="sign_up_with_email">Sign up with email</string>
     <string name="continue_with_google">Continue with Google</string>
@@ -25,4 +25,12 @@
     <string name="your_password_string">Your password</string>
     <string name="email">Email</string>
     <string name="password_string">Password</string>
+    <string name="search_string" translatable="false">Search</string>
+    <string name="string_notification">Notification</string>
+    <string name="open_string">Open</string>
+    <string name="close_string">Close</string>
+    <string name="ideas_string">ideas</string>
+    <string name="history_string">History</string>
+    <string name="todo_string">todo</string>
+    <string name="birthday_string">birthdays</string>
 </resources>

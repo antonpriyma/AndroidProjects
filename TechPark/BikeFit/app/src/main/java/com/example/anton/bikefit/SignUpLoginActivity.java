@@ -3,6 +3,7 @@ package com.example.anton.bikefit;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageSwitcher;
@@ -15,8 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpLoginActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
-    private  Button signUpGoogleButton;
-    private  Button signUpEmailButton;
+    private CardView signUpGoogleButton;
+    private  CardView signUpEmailButton;
     private  TextView logInTextView;
 
 

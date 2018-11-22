@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Liberies-Practice</string>
+    <string name="number_string">Number</string>
+    <string name="get_json_info_string">Get Json Info</string>
+</resources>

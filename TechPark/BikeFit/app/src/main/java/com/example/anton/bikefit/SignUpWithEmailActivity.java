@@ -20,7 +20,7 @@ public class SignUpWithEmailActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private Button registerButton;
-    private FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +29,6 @@ public class SignUpWithEmailActivity extends AppCompatActivity {
         email=(EditText)findViewById(R.id.email_register_edit_text) ;
         password=(EditText)findViewById(R.id.password_register_edit_text) ;
         registerButton=(Button)findViewById(R.id.register_button);
-        frameLayout=(FrameLayout)findViewById(R.id.frame_layout);
         View.OnClickListener onClickListener=new View.OnClickListener() {
             @Override
             public void onClick(View view) {

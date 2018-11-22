@@ -27,31 +27,34 @@
             android:visibility="gone" />
     </FrameLayout>
 
-   <Button
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-       android:layout_below="@id/frame_layout"
-       android:layout_margin="8dp"
-       android:layout_centerHorizontal="true"
-       android:background="@color/white"
-       android:text="@string/continue_with_google"
-       android:textSize="14sp"
-       style="@style/ButtonWhite"
-       android:id="@+id/signup_google_button"
-       android:drawableLeft="@mipmap/google_icon" />
-
-    <Button
+   <!--<Button-->
+           <!--android:layout_width="match_parent"-->
+           <!--android:layout_height="wrap_content"-->
+       <!--android:layout_below="@id/frame_layout"-->
+       <!--android:layout_margin="8dp"-->
+       <!--android:layout_centerHorizontal="true"-->
+       <!--android:background="@color/white"-->
+       <!--android:text="@string/continue_with_google"-->
+       <!--android:textSize="14sp"-->
+       <!--style="@style/ButtonWhite"-->
+       <!--android:id="@+id/signup_google_button"-->
+       <!--android:drawableLeft="@mipmap/google_icon" />-->
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_centerHorizontal="true"
+        layout="@layout/google_button"
+        android:id="@+id/signup_google_button"
+        android:layout_below="@id/frame_layout"/>
+    <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/signup_google_button"
         android:layout_margin="8dp"
-        android:background="@color/white"
-        android:text="@string/sign_up_with_email"
-        android:textSize="14sp"
-        style="@style/ButtonWhite"
+        layout="@layout/email_button"
         android:id="@+id/signup_email_button"
-        android:drawableLeft="@mipmap/email_icon"
       />
 
     <TextView
