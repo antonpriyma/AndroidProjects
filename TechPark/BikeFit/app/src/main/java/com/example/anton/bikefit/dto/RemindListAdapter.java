@@ -12,7 +12,7 @@ import com.example.anton.bikefit.R;
 
 import java.util.List;
 
-public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.RemindViewHolder> {
+public class RemindListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<RemindDTO> data;
 
 
@@ -28,9 +28,10 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RemindViewHolder holder, int position) {
-        holder.title.setText(data.get(position).getTitle());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        ((RemindViewHolder)viewHolder).title.setText(data.get(i).getTitle());
     }
+
 
     @Override
     public int getItemCount() {
@@ -45,6 +46,11 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
             super(itemView);
             title=(TextView)itemView.findViewById(R.id.title);
             cardView=(CardView)itemView.findViewById(R.id.card_view);
+
         }
+    }
+
+    public List<RemindDTO> getData() {
+        return data;
     }
 }

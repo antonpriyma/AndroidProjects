@@ -1,5 +1,6 @@
 package com.example.anton.bikefit;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,6 +63,8 @@ public class LogInActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(LogInActivity.this, "Authentication completed.",
                                     Toast.LENGTH_LONG).show();
+                            Intent intent=new Intent(getApplicationContext(),MainRemindActivity.class);
+                            startActivity(intent);
                             Log.d(TAG,"Authentication completed.");
                         } else {
                             // If sign in fails, display a message to the user.

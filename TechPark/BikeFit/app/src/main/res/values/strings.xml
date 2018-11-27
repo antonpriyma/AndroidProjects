@@ -30,7 +30,6 @@
     <string name="open_string">Open</string>
     <string name="close_string">Close</string>
     <string name="ideas_string">ideas</string>
-    <string name="history_string">History</string>
-    <string name="todo_string">todo</string>
+    <string name="todo_string">TO DO</string>
     <string name="birthday_string">birthdays</string>
 </resources>

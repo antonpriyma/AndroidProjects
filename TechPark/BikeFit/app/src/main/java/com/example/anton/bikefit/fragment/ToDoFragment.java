@@ -14,10 +14,11 @@ import com.example.anton.bikefit.dto.RemindListAdapter;
 
 import java.util.List;
 
-public class HistoryFragment extends AbstractFragment {
+public class ToDoFragment extends AbstractFragment {
     private static final int LAYOUT=R.layout.fragment_history;
     private LinearLayoutManager mLayoutManager;
     List<RemindDTO> data;
+    RecyclerView rv;
 
 
     public void setContext(Context context) {
@@ -28,13 +29,13 @@ public class HistoryFragment extends AbstractFragment {
         this.data = data;
     }
 
-    public static HistoryFragment getInstance(Context context, List<RemindDTO> data) {
+    public static ToDoFragment getInstance(Context context, List<RemindDTO> data) {
         Bundle args = new Bundle();
-        HistoryFragment fragment = new HistoryFragment();
+        ToDoFragment fragment = new ToDoFragment();
         fragment.setArguments(args);
         fragment.setContext(context);
         fragment.setData(data);
-        fragment.setTitle(context.getString(R.string.history_string));
+        fragment.setTitle(context.getString(R.string.todo_string));
 
         return fragment;
     }
@@ -49,19 +50,20 @@ public class HistoryFragment extends AbstractFragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_history, container, false);
-        RecyclerView rv =(RecyclerView)view.findViewById(R.id.recycle_view);
+        rv =(RecyclerView)view.findViewById(R.id.recycle_view);
 
         rv.setLayoutManager(new LinearLayoutManager(context));
-        rv.setAdapter(new RemindListAdapter(createMockData()));
+        rv.setAdapter(new RemindListAdapter(data));
         return view;
     }
 
-    private List<RemindDTO> createMockData() {
-        data.add(new RemindDTO("Демас гей"));
-        data.add(new RemindDTO("Демас гей"));
-        data.add(new RemindDTO("Item 1"));
-        data.add(new RemindDTO("Item 1"));
-        data.add(new RemindDTO("Item 1"));
+
+
+    public RecyclerView getRv() {
+        return rv;
+    }
+
+    public List<RemindDTO> getData() {
         return data;
     }
 }

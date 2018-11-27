@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/email_login_edit_text"
         android:hint="@string/your_email"
+        android:text="apriyma0@gmail.com"
         android:layout_centerHorizontal="true"
         android:inputType="textEmailAddress" />
     <TextView
@@ -52,6 +53,7 @@
         android:layout_width="344dp"
         android:layout_below="@id/password_login_text_view"
         android:layout_height="wrap_content"
+        android:text="knowledge123"
         android:id="@+id/password_login_edit_text"
         android:layout_centerHorizontal="true"
         android:inputType="textPassword"

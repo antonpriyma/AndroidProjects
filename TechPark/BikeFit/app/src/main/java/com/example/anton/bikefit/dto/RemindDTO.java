@@ -6,6 +6,7 @@ public class RemindDTO {
     public RemindDTO(String titile) {
         this.title = titile;
     }
+    public RemindDTO(){this.title="";}
 
     public String getTitle() {
         return title;
