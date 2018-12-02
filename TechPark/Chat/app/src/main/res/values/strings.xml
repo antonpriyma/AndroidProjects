@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Chat</string>
+    <string name="login_string">Логин</string>
+    <string name="next_string">Next</string>
+    <string name="input_placeholder_string">Write a message</string>
+</resources>

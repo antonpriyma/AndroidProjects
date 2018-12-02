@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.anton.bikefit.R;
@@ -41,11 +42,20 @@ public class RemindListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     static class RemindViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         TextView title;
+        Button deleteButton;
 
         public RemindViewHolder(View itemView) {
             super(itemView);
             title=(TextView)itemView.findViewById(R.id.title);
             cardView=(CardView)itemView.findViewById(R.id.card_view);
+            deleteButton=itemView.findViewById(R.id.delete_button);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
 
         }
     }

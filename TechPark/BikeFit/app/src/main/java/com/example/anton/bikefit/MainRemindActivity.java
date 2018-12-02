@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -29,6 +31,7 @@ import android.widget.LinearLayout;
 
 import com.example.anton.bikefit.adapter.TabsPagerFragmentAdapter;
 import com.example.anton.bikefit.dto.RemindDTO;
+import com.example.anton.bikefit.fragment.BottomSheetFragment;
 import com.example.anton.bikefit.fragment.ToDoFragment;
 import com.example.anton.bikefit.fragment.ToDoFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +44,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class MainRemindActivity extends AppCompatActivity {
@@ -58,27 +64,66 @@ public class MainRemindActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference myRef = database.getReference(USERS_TABLE);
+    private BottomSheetFragment fragment;
+    private Button okButton;
     ToDoFragment toDoFragment;
     int number;
+
+
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
             switch (view.getId()) {
                 case R.id.plus_button:
+
+//                    if (bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_HIDDEN) {
+//                        fragment = new BottomSheetFragment();
+//                        fragment.show(getSupportFragmentManager(), fragment.getTag());
+//                        break;
+//                    }
+////                    }else {
+////
+////                        fragment.show(getSupportFragmentManager(), fragment.getTag());
+////                        hideKeyboard();
+////                        AddTask(taskAddText.getText().toString());
+////                        floatingActionButton.setImageResource(R.drawable.plus);
+////
+////                    }
+//                case R.id.ok_test_button:{
+//                    hideKeyboard();
+//                    AddTask(taskAddText.getText().toString());
+//                    break;
+//                }
                     if(bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_HIDDEN) {
                         floatingActionButton.setImageResource(R.drawable.baseline_create_black_24);
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                     }else {
                         hideKeyboard();
-                        AddTask(taskAddText.getText().toString());
+                        Executor executor=Executors.newCachedThreadPool();
+                        ((ExecutorService) executor).submit(new Runnable() {
+                            @Override
+                            public void run() {
+                                AddTask(taskAddText.getText().toString());
+                            }
+                        });
+
                         floatingActionButton.setImageResource(R.drawable.plus);
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
                     }
-                    break;
+
                 }
             }
         };
+
+    public void HideBottomSheet(){
+        hideKeyboard();
+        AddTask(taskAddText.getText().toString());
+        floatingActionButton.setImageResource(R.drawable.plus);
+    }
 
     public DatabaseReference getMyRef() {
         return myRef;
@@ -86,18 +131,23 @@ public class MainRemindActivity extends AppCompatActivity {
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        fragment = new BottomSheetFragment();
+//        fragment.show(getSupportFragmentManager(), "TAG");
         super.onCreate(savedInstanceState);
         setContentView(Layout);
+        fragment = new BottomSheetFragment();
         InitToolBar();
         initTabs();
+        //okButton=findViewById(R.id.ok_test_button);
+        //okButton.setOnClickListener(onClickListener);
         taskAddText=findViewById(R.id.task_input_edit_text);
         bottomSheet=findViewById(R.id.bottom_sheet);
         bottomSheetBehavior=BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         number=0;
+
         getMyRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
