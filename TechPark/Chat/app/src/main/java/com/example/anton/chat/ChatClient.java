@@ -21,7 +21,7 @@ public class ChatClient {
     private boolean isSet;
     private ChatClient instance;
 
-    private ChatClient getInstance(){
+    public ChatClient getInstance(){
         return instance;
     }
     public ChatClient(Socket socket,String username,MainActivity mainActivity){
@@ -36,6 +36,8 @@ public class ChatClient {
         }
         instance=this;
     }
+
+
 
     public void watchForConnectionInput() throws IOException {
         BufferedReader reader= new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -72,14 +74,24 @@ public class ChatClient {
                     case "message":
                         Log.d(TAG,  command.UserName+command.Body);
                         Log.d(TAG, username);
-                        if (!command.UserName.equals(username)){
+                        if (command.UserName.equals(username)){
                             Log.d(TAG, command.UserName+command.Body);
                             final String name=command.UserName;
                             final String body=command.Body;
                             mainActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mainActivity.setText(name+body);
+                                    mainActivity.onMessage(body,"",true);
+                                }
+                            });
+                        }else {
+                            Log.d(TAG, command.UserName+command.Body);
+                            final String name=command.UserName;
+                            final String body=command.Body;
+                            mainActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mainActivity.onMessage(body,name.replace("{","").replace("}",""),false);
                                 }
                             });
                         }

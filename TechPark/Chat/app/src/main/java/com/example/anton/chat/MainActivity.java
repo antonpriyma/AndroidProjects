@@ -7,27 +7,34 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     public final String NAME_EXTRA="NAME";
     private Socket client;
     ChatClient chatClient;
     private PrintWriter printwriter;
     private EditText textField;
-    private Button button;
+    private ImageButton button;
     private String messsage;
     private TextView textView;
     private OnMessageReceived mMessageListener = null;
     private BufferedReader mBufferIn;
     private String mServerMessage;
     private String name;
+    private MemberData data;
+    private MessageAdapter messageAdapter;
+    private ListView messagesView;
 
     private MainActivity getInstance(){
         return this;
@@ -36,11 +43,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState!=null){
+            onRestoreInstanceState(savedInstanceState);
+        }
+
         name=getIntent().getStringExtra(NAME_EXTRA);
+        data=new MemberData(name,getRandomColor());
         setContentView(R.layout.activity_main);
-        textView=findViewById(R.id.text_view);
+        messageAdapter = new MessageAdapter(this);
+        messagesView = (ListView)findViewById(R.id.messages_view);
+        messagesView.setAdapter(messageAdapter);
+//        textView=findViewById(R.id.text_view);
         textField = (EditText) findViewById(R.id.edit_text); //reference to the text field
-        button = (Button) findViewById(R.id.button1);   //reference to the send button
+        button = findViewById(R.id.button1);   //reference to the send button
         new AsyncRequest().execute();
 
 
@@ -63,6 +78,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onMessage(String s,String name,boolean toCurrentUser) {
+        try {
+
+            final Message message = new Message(s, new MemberData(name,"#4a148c"),toCurrentUser);
+            textField.setText("");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    messageAdapter.add(message);
+                    messagesView.setSelection(messagesView.getCount() - 1);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private class AsyncSendMessage extends AsyncTask{
 
@@ -77,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] objects) {
+
+
             try {
 
                 try {
@@ -143,5 +177,49 @@ public class MainActivity extends AppCompatActivity {
         };
         new Thread(watch).start();
 
+    }
+
+    private String getRandomColor() {
+        Random r = new Random();
+        StringBuffer sb = new StringBuffer("#");
+        while(sb.length() < 7){
+            sb.append(Integer.toHexString(r.nextInt()));
+        }
+        return sb.toString().substring(0, 7);
+    }
+
+    class MemberData {
+        private String name;
+        private String color;
+
+        public MemberData(String name, String color) {
+            this.name = name;
+            this.color = color;
+        }
+
+
+        public MemberData() {
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+
+
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        onRestoreInstanceState(savedInstanceState);
     }
 }

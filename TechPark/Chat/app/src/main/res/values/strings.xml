@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Chat</string>
-    <string name="login_string">Логин</string>
+    <string name="login_string">Your name</string>
     <string name="next_string">Next</string>
     <string name="input_placeholder_string">Write a message</string>
+    <string name="email_string">example@chat.ru</string>
 </resources>

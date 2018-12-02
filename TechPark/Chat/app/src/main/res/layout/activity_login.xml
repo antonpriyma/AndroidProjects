@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
+
+
     
     <EditText
         android:layout_width="match_parent"
@@ -18,6 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/name_edit_text"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorPrimaryDark"
         android:text="@string/next_string"
         android:id="@+id/next_button"/>
 
