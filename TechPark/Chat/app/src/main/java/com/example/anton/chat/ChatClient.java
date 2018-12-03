@@ -9,23 +9,41 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ChatClient {
     private final Pattern p = Pattern.compile("^\\/([^\\s]*)\\s?(?:\\[([^\\]]*)\\])?\\s*(.*)$");
     private Socket socket;
     private final String TAG="CLIENT";
-    private String username;
+    private String username="";
     private PrintWriter printWriter;
     private MainActivity mainActivity;
     private boolean isSet;
-    private ChatClient instance;
+    private static  ChatClient instance=new ChatClient();
+    private List<Message> messages;
 
-    public ChatClient getInstance(){
+    public ChatClient() {
+        messages=new ArrayList<>();
+        return;
+    }
+
+    public boolean isSetted(){
+        return !messages.isEmpty();
+    }
+
+    public static ChatClient getInstance(){
         return instance;
     }
-    public ChatClient(Socket socket,String username,MainActivity mainActivity){
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setClient(Socket socket, String username, MainActivity mainActivity){
         this.socket=socket;
+
         this.mainActivity=mainActivity;
         this.username=username;
         isSet=false;
@@ -35,6 +53,11 @@ public class ChatClient {
             e.printStackTrace();
         }
         instance=this;
+    }
+
+    public void setConnection(Socket socket,MainActivity mainActivity){
+        this.socket=socket;
+        this.mainActivity=mainActivity;
     }
 
 
@@ -106,7 +129,17 @@ public class ChatClient {
         while (!isSet){ ;}
         if (!message.isEmpty()){
             Log.d(TAG, "watchForConsoleInput: "+username);
-            sendCommand("message",message);
+//            Command command=parseInput(message);
+//            if (command.Command=="") {
+                sendCommand("message", message);
+//            }else {
+//                switch (command.Command){
+//                    case "enter":
+//                        sendCommand("enter", command.Body, conn);
+//                    case "leave":
+//                        sendCommand("leave", "", conn)
+//                }
+//            }
         }
     }
 
@@ -147,6 +180,9 @@ public class ChatClient {
         printWriter.write(message);
         printWriter.flush();
     }
+
+
+
 
 
 

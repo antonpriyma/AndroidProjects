@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity{
     private ImageButton button;
     private String messsage;
     private TextView textView;
-    private OnMessageReceived mMessageListener = null;
     private BufferedReader mBufferIn;
     private String mServerMessage;
     private String name;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
         if (savedInstanceState!=null){
             onRestoreInstanceState(savedInstanceState);
         }
+        chatClient=ChatClient.getInstance();
 
         name=getIntent().getStringExtra(NAME_EXTRA);
         data=new MemberData(name,getRandomColor());
@@ -53,11 +53,12 @@ public class MainActivity extends AppCompatActivity{
         messageAdapter = new MessageAdapter(this);
         messagesView = (ListView)findViewById(R.id.messages_view);
         messagesView.setAdapter(messageAdapter);
-//        textView=findViewById(R.id.text_view);
         textField = (EditText) findViewById(R.id.edit_text); //reference to the text field
         button = findViewById(R.id.button1);   //reference to the send button
         new AsyncRequest().execute();
-
+//        if (chatClient.isSetted()) {
+//            messageAdapter.setMessages(chatClient.getMessages());
+//        }
 
 
         //Button press event listener
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void run() {
                     messageAdapter.add(message);
+                    chatClient.getMessages().add(message);
                     messagesView.setSelection(messagesView.getCount() - 1);
                 }
             });
@@ -112,39 +114,27 @@ public class MainActivity extends AppCompatActivity{
 
 
             try {
-
                 try {
-                    client = new Socket("192.168.1.40", 9000);  //connect to server
+                        client = new Socket("192.168.0.50", 9000);  //connect to server
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if (client.isConnected()){
-                    service();
-                }
-//                    ActivityCompat.requestPermissions(this,
-//                            new String[]{Manifest.permission.INTERNET},);
 
-               // while (!mBufferIn.ready()) { }
+                    if (client.isConnected()) {
+                        service();
+                    }
 
+                    if (ChatClient.getInstance().isSetted()){
 
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                messageAdapter.setMessages(chatClient.getMessages());
+                            }
+                        });
 
+                    }
 
-
-//                printwriter.flush();
-//                try { ;
-//                    mServerMessage = mBufferIn.readLine();
-//                    Log.d("TAG", "doInBackground: "+mServerMessage);
-//                }catch (Exception e){
-//                    Log.d("TAG", "doInBackground: "+e);
-//                }
-//                printwriter.close();
-//                Log.d("TAG", "doInBackground: "+"OK");
-//                while (client.isConnected()){
-//
-//                }
-//
-//
-//                client.close();   //closing the connection
 
 
             } catch (Exception e){
@@ -154,9 +144,6 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public interface OnMessageReceived {
-        public void messageReceived(String message);
-    }
 
     public void setText(String s){
         textView.setText(s);
@@ -164,7 +151,10 @@ public class MainActivity extends AppCompatActivity{
 
     private void service(){
         Log.d("TAG", "point 2");
-        chatClient=new ChatClient(client,String.format("{%s}",name),getInstance());
+
+            chatClient.setClient(client, String.format("{%s}", name), getInstance());
+
+
         Runnable watch = new Runnable() {
             @Override
             public void run() {
@@ -210,16 +200,17 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
+
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onDestroy() {
 
-
+        super.onDestroy();
+        try {
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        onRestoreInstanceState(savedInstanceState);
-    }
+
 }
