@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--<item name="android:colorSecondary" tools:targetApi="n_mr1">@color/colorSecondary</item>-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:editTextColor">@color/colorSecondary</item>
+        <item name="android:textColorHint">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorSecondaryDark</item>
+    </style>
+    <style name="toolbar">
+        <item name="android:theme">@style/AppTheme</item>
+        <item name="android:titleTextColor" tools:targetApi="m">@color/colorSecondary</item>
+        <item name="android:subtitleTextColor" tools:targetApi="m">@color/colorSecondary</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <!--<item name="android:textColor">@color/colorSecondary</item>-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+    </style>
+
+    <style name="CardTextStyle">
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginLeft">14dp</item>
+    </style>
+
+
+
+
+</resources>

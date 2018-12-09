@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -97,6 +98,28 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    public void makeEnterToast(final String name, final String room) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast=Toast.makeText(getApplicationContext(),name+"enter "+room,Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+
+    }
+
+
+    public void makeLeaveToast(final String name, final String room) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast=Toast.makeText(getApplicationContext(),name+"leave "+room,Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+
+    }
 
     private class AsyncSendMessage extends AsyncTask{
 
@@ -115,28 +138,25 @@ public class MainActivity extends AppCompatActivity{
 
             try {
                 try {
-                        client = new Socket("192.168.0.50", 9000);  //connect to server
+                        client = new Socket("192.168.1.40", 9000);  //connect to server
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                    if (client.isConnected()) {
-                        service();
-                    }
+                if (client.isConnected()) {
+                    service();
+                }
 
-                    if (ChatClient.getInstance().isSetted()){
+                if (ChatClient.getInstance().isSetted()){
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                messageAdapter.setMessages(chatClient.getMessages());
+                    runOnUiThread(new Runnable() {
+                    @Override
+                        public void run() {
+                            messageAdapter.setMessages(chatClient.getMessages());
                             }
                         });
 
-                    }
-
-
-
+                }
             } catch (Exception e){
                 Log.d("TAG", "doInBackground: "+e.toString());
             }

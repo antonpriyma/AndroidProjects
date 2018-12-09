@@ -2,6 +2,7 @@ package com.example.anton.chat;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -87,11 +88,11 @@ public class ChatClient {
                         break;
 
                     case "enter":
-                        //fmt.Println( Command.Username,"enter",Command.Body)
+                        mainActivity.makeEnterToast(command.UserName,command.Body);
                         break;
 
                     case "leave":
-                        //fmt.Println( Command.Username, "leave",Command.Body)
+                        mainActivity.makeLeaveToast(command.UserName,command.Body);
                         break;
 
                     case "message":
@@ -129,17 +130,21 @@ public class ChatClient {
         while (!isSet){ ;}
         if (!message.isEmpty()){
             Log.d(TAG, "watchForConsoleInput: "+username);
-//            Command command=parseInput(message);
-//            if (command.Command=="") {
+            Command command=parseInput(message);
+            if (command.Command=="") {
                 sendCommand("message", message);
-//            }else {
-//                switch (command.Command){
-//                    case "enter":
-//                        sendCommand("enter", command.Body, conn);
-//                    case "leave":
-//                        sendCommand("leave", "", conn)
-//                }
-//            }
+            }else {
+                switch (command.Command){
+                    case "enter":
+                        sendCommand("enter", command.Body);
+                        break;
+                    case "leave":
+                        sendCommand("leave", "");
+                        break;
+                    case "test":
+                        sendCommand("test",command.Body);
+                }
+            }
         }
     }
 
@@ -158,21 +163,39 @@ public class ChatClient {
 
     private Command parseCommand(String message){
         String res[] =message.split(" ");
+        StringBuilder s=new StringBuilder();
         if (res.length==2){
             return new Command("connect","","{Anton}");
-        }else if (res.length==3) {
-            return new Command("message",res[2],res[1].replace("[{","{").replace("}]","}"));
+        }else if (res.length>=3) {
+            if (res[0].charAt(1)=='e'){
+                return new Command("enter",res[2],res[1].replace("[","").replace("]",""));
+            }else if (res[0].charAt(1)=='l'){
+                return new Command("leave","",username);
+            }
+            for (int i=2;i<res.length;i++){
+                s.append(" "+res[i]);
+            }
+            return new Command("message",s.toString(),res[1].replace("[{","{").replace("}]","}"));
         }else{
             return new Command("ready","","");
         }
     }
 
-//    private Command parseInput(String message){
-//        String res[] = message.split(" ");
-//        if (res.length==2){
-//            return new Command()
-//        }
-//    }
+    private Command parseInput(String message){
+        String res[]=message.split(" ");
+        if (res[0].equals("/test")){
+            return new Command(res[0].replace("/",""),res[1].replace("\n",""),username);
+        }else
+        if (!message.contains("/")){
+            return new Command("","","");
+        }
+        res = message.split(" ");
+        if (res.length==2){
+            return new Command("enter",res[1],username);
+        }else {
+            return new Command("leave","",username);
+        }
+    }
 
     private void sendCommand(String command,String body){
         String message = String.format("/%s %s\n",command,body);

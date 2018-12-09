@@ -148,25 +148,7 @@ public class MainRemindActivity extends AppCompatActivity {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         number=0;
 
-        getMyRef().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                ArrayList<RemindDTO> list = dataSnapshot.child(firebaseUser.getUid()).getValue(ArrayList.class);
-//                if (list != null){
-//                    historyFragment.getData().add(list.get(0));
-//                    historyFragment.getRv().getAdapter().notifyDataSetChanged();
-//                }
-//
-//                historyFragment.getRv().getAdapter().notifyDataSetChanged();
 
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         getMyRef().child(firebaseUser.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
