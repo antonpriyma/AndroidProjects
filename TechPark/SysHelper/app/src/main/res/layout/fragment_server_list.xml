@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
     android:background="@color/colorPrimary"
     tools:context=".ServerListActivity">
     <android.support.v7.widget.Toolbar
@@ -13,12 +14,13 @@
         android:subtitleTextColor="@color/colorSecondary"
         android:navigationIcon="?attr/homeAsUpIndicator"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        tools:targetApi="lollipop" />
+        tools:targetApi="lollipop"
+        android:transitionName="shared_toolbar"/>
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/servers_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+
         android:id="@+id/servers_list"></android.support.v7.widget.RecyclerView>
     <!--<TextView-->
     <!--android:layout_centerInParent="true"-->

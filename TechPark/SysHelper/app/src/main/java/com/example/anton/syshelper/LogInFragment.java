@@ -109,6 +109,7 @@ public class LogInFragment extends Fragment {
                             Log.d(AUTH,"Authentication completed.");
                             Intent intent=new Intent(getContext(),ServerListActivity.class);
                             startActivity(intent);
+                            ((LogInActivity)getActivity()).startServersActivity();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getContext(), "Authentication failed.",

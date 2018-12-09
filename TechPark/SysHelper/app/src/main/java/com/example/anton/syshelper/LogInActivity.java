@@ -1,5 +1,6 @@
 package com.example.anton.syshelper;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +29,12 @@ public class LogInActivity extends AppCompatActivity {
         logInFragment=new LogInFragment();
         fragmentTransaction.add(R.id.fragment_container,logInFragment);
         fragmentTransaction.commit();
+    }
+
+    public void startServersActivity(){
+        Intent intent=new Intent(this,ServerListActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.animator.slide_down_open,R.animator.slide_down_close);
     }
 
 
