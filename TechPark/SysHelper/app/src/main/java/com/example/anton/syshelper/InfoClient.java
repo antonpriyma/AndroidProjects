@@ -107,6 +107,15 @@ public class InfoClient {
                                 mainActivity.setDiskInfoText(new DiskInfo(command.Body));
                             }
                         });
+                        break;
+
+                    case "postExe":
+                        mainActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mainActivity.setConsoleLog(command.Body);
+                            }
+                        });
 
 
                     case "message":
@@ -161,6 +170,8 @@ public class InfoClient {
                     case "getDiskInfo":
                         sendCommand("getDiskInfo",command.Body);
                         break;
+                    case "exe":
+                        sendCommand("exe",command.Body);
                 }
             }
         }
@@ -183,7 +194,13 @@ public class InfoClient {
         String res[] =message.split(" ");
         StringBuilder s=new StringBuilder();
         if (message.charAt(1)=='p'){
-            return new Command("postDiskInfo",message.substring(message.indexOf("]")+2),"");
+            switch (message.charAt(5)){
+                case 'D':
+                    return new Command("postDiskInfo",message.substring(message.indexOf("]")+2),"");
+                case 'E':
+                    return new Command("postExe",message.substring(message.indexOf("]")+2),"");
+            }
+
         }
         if (res.length==2){
             return new Command("connect","","{Anton}");
@@ -204,31 +221,30 @@ public class InfoClient {
         }
     }
 
-    private Command parseInput(String message){
+    private Command parseInput(String message) {
         String res[]=message.split(" ");
-        if (res[0].equals("/test")){
-            return new Command(res[0].replace("/",""),res[1].replace("\n",""),username);
-        }else
-        if (!message.contains("/")){
-            return new Command("","","");
+        if (res[0].charAt(1) == 'e') {
+                String args = message.substring(message.indexOf(" ")+1);
+                return new Command("exe", args, username);
+            }
+            if (res[0].equals("/test")) {
+                return new Command(res[0].replace("/", ""), res[1].replace("\n", ""), username);
+            } else if (!message.contains("/")) {
+                return new Command("", "", "");
+            }
+            res = message.split(" ");
+            if (res.length == 2) {
+                if (res[0].charAt(1) == 'e') {
+                } else
+                    return new Command("enter", res[1], username);
+            } else {
+                if (res[0].charAt(1) == 'g') {
+                    return new Command("getDiskInfo", "", username);
+                } else
+                    return new Command("leave", "", username);
+            }
+            return null;
         }
-        res = message.split(" ");
-        if (res.length==2){
-            if (res[0].charAt(1)=='e'){
-                String args=new String();
-                for (int i=1;i<res.length;i++){
-                    args+=res[i];
-                }
-                return new Command("exe",args,username);
-            }else
-                return new Command("enter",res[1],username);
-        }else {
-            if (res[0].charAt(1)=='g') {
-                return new Command("getDiskInfo", "", username);
-            }else
-            return new Command("leave","",username);
-        }
-    }
 
     private void sendCommand(String command,String body){
         String message = String.format("/%s %s\n",command,body);

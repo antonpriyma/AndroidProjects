@@ -33,12 +33,12 @@ public class ServerInfoActivity extends AppCompatActivity {
 
     private void initTabs() {//Инициализация верхнего меню
         diskInfoFragment=new DiskInfoFragment();
-      //  consoleFragment=new ConsoleFragment();
+        consoleFragment=new ConsoleFragment();
         viewPager = (ViewPager)findViewById(R.id.view_pager);//Разметка
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);//Разметка Бара выбора
         TabsAdapter adapter = new TabsAdapter(this,getSupportFragmentManager());//Обработчик выбора
         adapter.addFragment(diskInfoFragment,"TEST");
-       // adapter.addFragment(consoleFragment,"CONSOLE");
+         adapter.addFragment(consoleFragment,"CONSOLE");
         //adapter.addFragment(toDoFragment,getString(R.string.todo_string));//Example fragment - просто xml разметка
 //        adapter.addFragment(new AbstractFragment(),getString(R.string.todo_string));
 //        adapter.addFragment(new AbstractFragment(),getString(R.string.ideas_string));
@@ -49,6 +49,10 @@ public class ServerInfoActivity extends AppCompatActivity {
 
     protected void setDiskInfoText(DiskInfo diskInfo){
         diskInfoFragment.setDiskInfo(diskInfo);
+    }
+
+    protected void setConsoleLog(String log){
+        consoleFragment.addLog(log);
     }
 
     private void setServerInfo(){
@@ -93,7 +97,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 
             try {
                 try {
-                    client = new Socket("192.168.0.50", 9000);  //connect to server
+                    client = new Socket("192.168.1.73", 9000);  //connect to server
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -115,6 +119,18 @@ public class ServerInfoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 chatClient.watchForConsoleInput("/getDiskInfo");
+            }
+        });
+        thread.start();
+
+        return "";
+    }
+
+    protected String execCommand(final String command){
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatClient.watchForConsoleInput("/exe "+command);
             }
         });
         thread.start();
