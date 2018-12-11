@@ -1,6 +1,7 @@
 package com.example.anton.syshelper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
@@ -45,6 +46,8 @@ public class ServerListFragment extends Fragment {
     private DatabaseReference myRef = database.getReference(USERS_TABLE);
     private android.support.v7.widget.Toolbar toolbar;
     private FragmentTransaction fragmentTransaction;
+
+
 
 
     @Override
