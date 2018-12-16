@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,15 +72,21 @@ public class ServerListFragment extends Fragment {
         View view=getView();
 //        ((ServerListActivity)getActivity()).showToolbar();
         toolbar=view.findViewById(R.id.servers_toolbar);
-        toolbar.setTitle("Servers");
+
         ((ServerListActivity)getActivity()).setSupportActionBar(toolbar);
         ((ServerListActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((ServerListActivity)getActivity()).setTitle("Servers");
         toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorSecondary),PorterDuff.Mode.SRC_ATOP);
         rv=view.findViewById(R.id.servers_list);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
         data=new ArrayList<>();
-        data.add(new ServerInfo("Server 1","lab.posevin.com",":22","asdfasdf","Server 1"));
-        rv.setAdapter(new ServerListAdapter(data));
+        ServerListAdapter adapter=new ServerListAdapter(data);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(rv);
+
+
+        rv.setAdapter(adapter);
         getMyRef().child(firebaseUser.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -96,6 +103,16 @@ public class ServerListFragment extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                ServerInfo info =dataSnapshot.getValue(ServerInfo.class);
+                int counter=0;
+                for (ServerInfo i:data){
+                    counter++;
+                    if (i.compareTo(info) == 0){
+                        data.remove(i);
+                        break;
+                    }
+                }
+                rv.getAdapter().notifyItemRemoved(counter);
 
             }
 
@@ -139,10 +156,13 @@ public class ServerListFragment extends Fragment {
 
                 break;
             case android.R.id.home:
-                ServerListFragment serverListFragment=new ServerListFragment();
-                fragmentTransaction.setCustomAnimations(R.animator.slide_in_left_open,R.animator.slide_in_right_close);
-                fragmentTransaction.replace(R.id.servers_fragment_container,serverListFragment);
-                fragmentTransaction.commit();
+//                ServerListFragment serverListFragment=new ServerListFragment();
+//                fragmentTransaction.setCustomAnimations(R.animator.slide_in_left_open,R.animator.slide_in_right_close);
+//                fragmentTransaction.replace(R.id.servers_fragment_container,serverListFragment);
+//                fragmentTransaction.commit();
+//                Intent intent=new Intent(getContext(),ServerListActivity.class);
+//                startActivity(intent);
+                ((ServerListActivity)getActivity()).startLogInActivity();
 
         }
 

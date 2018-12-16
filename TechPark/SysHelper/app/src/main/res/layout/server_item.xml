@@ -43,7 +43,7 @@
         <ImageButton
             android:layout_width="41dp"
             android:layout_height="46dp"
-
+            android:id="@+id/delete_button"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="16dp"

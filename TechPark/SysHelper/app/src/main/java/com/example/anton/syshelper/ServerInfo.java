@@ -1,18 +1,26 @@
 package com.example.anton.syshelper;
 
-public class ServerInfo {
+import android.support.annotation.NonNull;
+
+public class ServerInfo implements Comparable<ServerInfo>{
     private String title;
     private String name;
     private String host;
     private  String port;
     private String password;
+    private String uId;
 
-    public ServerInfo(String name, String host, String port, String password,String title) {
+    public ServerInfo(String name, String host, String port, String password,String title,String uId) {
         this.name = name;
         this.host = host;
         this.title=title;
+        this.uId=uId;
         this.port = port;
         this.password = password;
+    }
+
+    public String getuId() {
+        return uId;
     }
 
     public ServerInfo() {
@@ -41,5 +49,10 @@ public class ServerInfo {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public int compareTo(@NonNull ServerInfo serverInfo) {
+        return (serverInfo.getuId().compareTo(this.getuId()));
     }
 }

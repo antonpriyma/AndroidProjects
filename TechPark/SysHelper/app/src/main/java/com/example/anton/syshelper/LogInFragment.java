@@ -1,10 +1,13 @@
 package com.example.anton.syshelper;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -14,6 +17,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +45,8 @@ public class LogInFragment extends Fragment {
     private FirebaseAuth mAuth;
     private TextView signUpLink;
     private final String AUTH="AUTH";
+    private LogInActivity logInActivity;
+    private Handler h;
     RegisterFragment registerFragment;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class LogInFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View view=getView();
+        logInActivity=(LogInActivity)getActivity();
         signUpLink=view.findViewById(R.id.link_signup);
         emailEditText=view.findViewById(R.id.input_email);
         passwordEditText=view.findViewById(R.id.input_password);
@@ -69,7 +76,36 @@ public class LogInFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (view.getId()==logInButton.getId()){
-                    logIn(emailEditText.getText().toString(),passwordEditText.getText().toString());
+                    boolean valid =true;
+                    final ProgressDialog progressDialog = new ProgressDialog(getContext(),
+                            R.style.MyProgressDialog);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setMax(100);
+
+                        String email = emailEditText.getText().toString();
+                        String password = passwordEditText.getText().toString();
+                        if (email.isEmpty()|| !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            emailEditText.setError("enter a valid email address");
+                            valid = false;
+                        }
+
+                        if (password.isEmpty() ||password.length()<6){
+                            passwordEditText.setError("at least 6 characters");
+                            valid=false;
+                        }
+                        if (valid) {
+                            progressDialog.setIndeterminate(true);
+
+                            progressDialog.setMessage("Loading...");
+                            progressDialog.show();
+                            h = new Handler() {
+                                public void handleMessage(Message msg) {
+                                    progressDialog.dismiss();
+                                }
+                            };
+                        }
+
+                            logIn(emailEditText.getText().toString(),passwordEditText.getText().toString());
                 }else if (view.getId()==signUpLink.getId()){
                     openSignUpFragment();
                 }
@@ -85,9 +121,9 @@ public class LogInFragment extends Fragment {
         registerFragment=new RegisterFragment();
 //        registerFragment.setExitTransition(new Slide(Gravity.RIGHT)
 //                .addTarget(R.id.fragment_container));
+        logInActivity.setRegisterNo();
         fragmentTransaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_in_right);
         fragmentTransaction.replace(R.id.fragment_container,registerFragment);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -104,11 +140,12 @@ public class LogInFragment extends Fragment {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(getContext(), "Authentication completed.",
                                     Toast.LENGTH_LONG).show();
+                            h.sendEmptyMessage(0);
 //                            Intent intent=new Intent(getActivity(),MainRemindActivity.class);
 //                            startActivity(intent);
                             Log.d(AUTH,"Authentication completed.");
-                            Intent intent=new Intent(getContext(),ServerListActivity.class);
-                            startActivity(intent);
+//                            Intent intent=new Intent(getContext(),ServerListActivity.class);
+//                            startActivity(intent);
                             ((LogInActivity)getActivity()).startServersActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -121,6 +158,8 @@ public class LogInFragment extends Fragment {
                     }
                 });
     }
+
+
 
 
 

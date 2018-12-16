@@ -5,7 +5,8 @@
         android:title="plus"
         android:id="@+id/plus_action"
         android:icon="@drawable/plus"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
+
         >
 
     </item>

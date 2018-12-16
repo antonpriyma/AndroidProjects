@@ -30,6 +30,7 @@ public class ConsoleFragment extends AbstractFragment{
 //                    currienttext.append("\n").append(editText.getText().toString());
 //                    commandLog.setText(currienttext);
                     activity.execCommand(editText.getText().toString());
+                    editText.setText("");
 
                     break;
             }
@@ -93,5 +94,8 @@ public class ConsoleFragment extends AbstractFragment{
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }
