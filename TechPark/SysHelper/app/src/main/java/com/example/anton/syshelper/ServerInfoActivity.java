@@ -97,7 +97,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 
             try {
                 try {
-                    client = new Socket("192.168.1.73", 9000);  //connect to server
+                    client = new Socket("192.168.0.50", 9000);  //connect to server
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
