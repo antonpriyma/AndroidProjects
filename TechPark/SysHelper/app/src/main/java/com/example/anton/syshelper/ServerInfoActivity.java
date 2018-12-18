@@ -30,7 +30,6 @@ public class ServerInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_server_info);
         setServerInfo();
         chatClient=new InfoClient();
-
         new AsyncRequest().execute();
         initTabs();
 
@@ -44,12 +43,8 @@ public class ServerInfoActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);//Разметка Бара выбора
         adapter = new TabsAdapter(this,getSupportFragmentManager());//Обработчик выбора
         adapter.addFragment(diskInfoFragment,"Disk");
-         adapter.addFragment(consoleFragment,"CONSOLE");
-         adapter.addFragment(fileManagerFragment,"FILES");
-        //adapter.addFragment(toDoFragment,getString(R.string.todo_string));//Example fragment - просто xml разметка
-//        adapter.addFragment(new AbstractFragment(),getString(R.string.todo_string));
-//        adapter.addFragment(new AbstractFragment(),getString(R.string.ideas_string));
-//        adapter.addFragment(new AbstractFragment(),getString(R.string.birthday_string));
+        adapter.addFragment(consoleFragment,"CONSOLE");
+        adapter.addFragment(fileManagerFragment,"FILES");
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
@@ -119,7 +114,6 @@ public class ServerInfoActivity extends AppCompatActivity {
                 try {
 
                     client = new Socket("192.168.0.50", 9000);  //connect to server
-
 
                 } catch (IOException e) {
                     e.printStackTrace();

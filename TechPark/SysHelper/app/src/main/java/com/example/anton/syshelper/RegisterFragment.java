@@ -28,8 +28,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterFragment extends Fragment {
 
-
-    private LogInFragment.OnFragmentInteractionListener mListener;
     private EditText emailEditText;
     private EditText passwordEditText;
     private Handler h;
@@ -42,8 +40,6 @@ public class RegisterFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -98,7 +94,6 @@ public class RegisterFragment extends Fragment {
 
 
                         signUp(emailEditText.getText().toString(), passwordEditText.getText().toString());
-                        //progressDialog.dismiss();
                     }
                 }
             }
@@ -132,11 +127,6 @@ public class RegisterFragment extends Fragment {
 
                 });
     }
-
-
-
-
-
 }
 
 
