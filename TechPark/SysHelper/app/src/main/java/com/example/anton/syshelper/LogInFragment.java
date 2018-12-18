@@ -35,9 +35,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class LogInFragment extends Fragment {
-
-
-    private OnFragmentInteractionListener mListener;
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button logInButton;
@@ -119,8 +116,6 @@ public class LogInFragment extends Fragment {
     public void openSignUpFragment(){
         fragmentTransaction=getFragmentManager().beginTransaction();
         registerFragment=new RegisterFragment();
-//        registerFragment.setExitTransition(new Slide(Gravity.RIGHT)
-//                .addTarget(R.id.fragment_container));
         logInActivity.setRegisterNo();
         fragmentTransaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_in_right);
         fragmentTransaction.replace(R.id.fragment_container,registerFragment);
@@ -141,14 +136,11 @@ public class LogInFragment extends Fragment {
                             Toast.makeText(getContext(), "Authentication completed.",
                                     Toast.LENGTH_LONG).show();
                             h.sendEmptyMessage(0);
-//                            Intent intent=new Intent(getActivity(),MainRemindActivity.class);
-//                            startActivity(intent);
                             Log.d(AUTH,"Authentication completed.");
-//                            Intent intent=new Intent(getContext(),ServerListActivity.class);
-//                            startActivity(intent);
                             ((LogInActivity)getActivity()).startServersActivity();
                         } else {
                             // If sign in fails, display a message to the user.
+                            h.sendEmptyMessage(0);
                             Toast.makeText(getContext(), "Authentication failed.",
                                     Toast.LENGTH_LONG).show();
                             Log.d(AUTH,"Authentication failed.");
@@ -159,32 +151,4 @@ public class LogInFragment extends Fragment {
                 });
     }
 
-
-
-
-
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

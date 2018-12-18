@@ -32,7 +32,6 @@ public class FileManagerFragment extends AbstractFragment {
     private String deletingFileName;
     private int deletingFileNumber;
     private ListView lv;
-    //private String[] files;
     private ArrayList<String> files;
     private ArrayAdapter adapter;
     private final String DELIM ="/";
@@ -53,9 +52,6 @@ public class FileManagerFragment extends AbstractFragment {
         this.context = context;
     }
 
-    //public void setData(List<RemindDTO> data) {
-    // this.data = data;
-    //}
 
     public static FileManagerFragment getInstance(Context context) {
         Bundle args = new Bundle();
@@ -135,9 +131,6 @@ public class FileManagerFragment extends AbstractFragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        //TextView textView = (TextView)item;
-        String pathName = item.getMenuInfo().toString();
-
         switch (item.getItemId()){
             case R.id.delete_file_button:
                 Toast toast= Toast.makeText(getContext(),"delete",Toast.LENGTH_LONG);

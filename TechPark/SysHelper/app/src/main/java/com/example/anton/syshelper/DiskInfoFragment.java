@@ -22,7 +22,6 @@ import java.util.List;
 
 public class DiskInfoFragment extends AbstractFragment {
     private static final int LAYOUT=R.layout.fragment_disk_info;
-    private LinearLayoutManager mLayoutManager;
     private TextView diskUsageProcent;
     private TextView diskUsage;
     private TextView diskSpace;
@@ -35,9 +34,6 @@ public class DiskInfoFragment extends AbstractFragment {
         this.context = context;
     }
 
-    //public void setData(List<RemindDTO> data) {
-       // this.data = data;
-    //}
 
     public static DiskInfoFragment getInstance(Context context) {
         Bundle args = new Bundle();
@@ -57,7 +53,7 @@ public class DiskInfoFragment extends AbstractFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_disk_info, container, false);
+        view = inflater.inflate(LAYOUT, container, false);
         return view;
     }
 

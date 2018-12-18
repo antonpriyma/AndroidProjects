@@ -1,5 +1,6 @@
 package com.example.anton.syshelper;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,18 +29,17 @@ public class ConsoleFragment extends AbstractFragment{
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.send_button:
-//                    currienttext.append("\n").append(editText.getText().toString());
-//                    commandLog.setText(currienttext);
+                    hideKeyboard(getActivity());
                     activity.execCommand(editText.getText().toString());
                     editText.setText("");
-
                     break;
             }
         }
     };
 
     protected void addLog(String s){
-        currienttext.append("\n").append(s.replace("$","\n"));
+
+        currienttext=new StringBuilder(s.replace("$","\n")+"\n"+currienttext.toString());
         commandLog.setText(currienttext);
     }
 
@@ -46,10 +47,6 @@ public class ConsoleFragment extends AbstractFragment{
     public void setContext(Context context) {
         this.context = context;
     }
-
-    //public void setData(List<RemindDTO> data) {
-    // this.data = data;
-    //}
 
     public static ConsoleFragment getInstance(Context context) {
         Bundle args = new Bundle();
@@ -81,21 +78,17 @@ public class ConsoleFragment extends AbstractFragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        View view = getView();
         activity=(ServerInfoActivity)getActivity();
-        //Console console=view.findViewById(R.id.console);
-//        Console console=new Console();
-       // Console.write("Test");
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager inputManager = (InputMethodManager) activity
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        // check if no view has focus:
+        View currentFocusedView = activity.getCurrentFocus();
+        if (currentFocusedView != null) {
+            inputManager.hideSoftInputFromWindow(currentFocusedView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }
