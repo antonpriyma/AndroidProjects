@@ -9,4 +9,6 @@
     <string name="password_string">password</string>
     <string name="port_string">port</string>
     <string name="send_string">send</string>
+    <string name="log_string">go test test1</string>
+    <string name="server_name_string">server name</string>
 </resources>

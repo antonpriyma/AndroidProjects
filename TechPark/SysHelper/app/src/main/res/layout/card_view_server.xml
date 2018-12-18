@@ -18,6 +18,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/in_card_linear_layout_padding">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <EditText
+                android:id="@+id/input_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:singleLine="true"
+                android:textColor="@color/colorSecondary"
+                android:hint="@string/server_name_string"
+                />
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

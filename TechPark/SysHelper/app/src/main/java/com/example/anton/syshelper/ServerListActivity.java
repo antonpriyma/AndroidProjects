@@ -1,6 +1,7 @@
 package com.example.anton.syshelper;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -112,12 +113,24 @@ public class ServerListActivity extends AppCompatActivity {
 //        return true;
 //    }
 
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     public void showToolbar(){
         toolbar.setVisibility(View.VISIBLE);
     }
 
     public void hideToolbar(){
         toolbar.setVisibility(View.GONE);
+    }
+
+    public void startLogInActivity(){
+        Intent intent=new Intent(this,LogInActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.animator.slide_up_open,R.animator.slide_up_close);
     }
 
 

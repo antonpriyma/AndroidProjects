@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,37 +34,37 @@ public class AddServerFragment extends Fragment {
     private EditText hostEditText;
     private EditText portEditText;
     private EditText nameEditText;
+    private EditText titleEditText;
     private EditText passwordEditText;
     private android.support.v7.widget.Toolbar toolbar;
-    private FloatingActionButton floatingActionButton;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference myRef = database.getReference(USERS_TABLE);
     private FragmentTransaction fragmentTransaction;
 
-    private View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.fab:
-//                    Executor executor=Executors.newCachedThreadPool();
-//                    ((ExecutorService) executor).submit(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            AddTask(nameEditText.getText().toString(),
-//                                    hostEditText.getText().toString(),
-//                                    portEditText.getText().toString(),
-//                                    passwordEditText.getText().toString(),
-//                                    "Test");
+//    private View.OnClickListener onClickListener=new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            switch (view.getId()){
+//                case R.id.fab:
+////                    Executor executor=Executors.newCachedThreadPool();
+////                    ((ExecutorService) executor).submit(new Runnable() {
+////                        @Override
+////                        public void run() {
+////                            AddTask(nameEditText.getText().toString(),
+////                                    hostEditText.getText().toString(),
+////                                    portEditText.getText().toString(),
+////                                    passwordEditText.getText().toString(),
+////                                    "Test");
+////
+////                        }
+////
+////
+////                    });
 //
-//                        }
-//
-//
-//                    });
-
-            }
-        }
-    };
+//            }
+//        }
+//    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,16 +100,16 @@ public class AddServerFragment extends Fragment {
         passwordEditText=view.findViewById(R.id.input_password);
         nameEditText=view.findViewById(R.id.input_username);
         portEditText=view.findViewById(R.id.input_port);
-        InitActionButton();
+        titleEditText=view.findViewById(R.id.input_title);
     }
 
-    private void InitActionButton(){
-        floatingActionButton=(FloatingActionButton)getView().findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(onClickListener);
-    }
 
     private void AddTask(String name, String host, String port, String password, String title){
-        myRef.child(firebaseUser.getUid()).push().setValue(new ServerInfo(name,host,port,password,title));
+        String key= myRef.child(firebaseUser.getUid()).push().getKey();
+        Log.d("ADD", "AddTask: "+key);
+        //myRef.child(firebaseUser.getUid()).push().setValue(new ServerInfo(name,host,port,password,title));
+        myRef.child(firebaseUser.getUid()).child(key).setValue(new ServerInfo(name,host,port,password,title,key));
+
     }
 
     @Override
@@ -122,16 +123,18 @@ public class AddServerFragment extends Fragment {
                 ((ExecutorService) executor).submit(new Runnable() {
                     @Override
                     public void run() {
-                        AddTask(nameEditText.getText().toString(),
+                            AddTask(nameEditText.getText().toString(),
                                 hostEditText.getText().toString(),
                                 portEditText.getText().toString(),
                                 passwordEditText.getText().toString(),
-                                "Test");
-
+                                titleEditText.getText().toString());
                     }
 
 
                 });
+                fragmentTransaction.setCustomAnimations(R.animator.slide_in_left_open, R.animator.slide_in_right_close);
+                fragmentTransaction.replace(R.id.servers_fragment_container, serverListFragment);
+                fragmentTransaction.commit();
 
 
 //        getSupportActionBar().hide();

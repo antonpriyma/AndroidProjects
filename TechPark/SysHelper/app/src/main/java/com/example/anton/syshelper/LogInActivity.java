@@ -14,6 +14,7 @@ public class LogInActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     LogInFragment logInFragment;
     RegisterFragment registerFragment;
+    private int fragment_no;
 
 
     @Override
@@ -27,14 +28,38 @@ public class LogInActivity extends AppCompatActivity {
     public void openLogInFragment(){
         fragmentTransaction=getSupportFragmentManager().beginTransaction();
         logInFragment=new LogInFragment();
-        fragmentTransaction.add(R.id.fragment_container,logInFragment);
+        fragment_no=1;
+        fragmentTransaction.replace(R.id.fragment_container,logInFragment);
         fragmentTransaction.commit();
+    }
+
+    public void openLogInFragmentFromRegiser(){
+        logInFragment=new LogInFragment();
+        fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragment_no=1;
+        fragmentTransaction.setCustomAnimations(R.animator.slide_in_left_open,R.animator.slide_in_right_close);
+        fragmentTransaction.replace(R.id.fragment_container,logInFragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fragment_no==1){
+            super.onBackPressed();
+        }else {
+            openLogInFragmentFromRegiser();
+        }
     }
 
     public void startServersActivity(){
         Intent intent=new Intent(this,ServerListActivity.class);
         startActivity(intent);
         overridePendingTransition(R.animator.slide_down_open,R.animator.slide_down_close);
+    }
+
+
+    protected void setRegisterNo(){
+        fragment_no=2;
     }
 
 

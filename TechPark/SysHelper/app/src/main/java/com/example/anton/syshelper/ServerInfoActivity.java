@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -17,33 +18,40 @@ public class ServerInfoActivity extends AppCompatActivity {
     private ViewPager viewPager;
     DiskInfoFragment diskInfoFragment;
     ConsoleFragment consoleFragment;
+    FileManagerFragment fileManagerFragment;
     private Socket client;
     InfoClient chatClient;
+    private  TabsAdapter adapter;
     ServerInfo serverInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_info);
-        initTabs();
         setServerInfo();
         chatClient=new InfoClient();
+
         new AsyncRequest().execute();
+        initTabs();
+
     }
 
     private void initTabs() {//Инициализация верхнего меню
         diskInfoFragment=new DiskInfoFragment();
         consoleFragment=new ConsoleFragment();
+        fileManagerFragment=new FileManagerFragment();
         viewPager = (ViewPager)findViewById(R.id.view_pager);//Разметка
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);//Разметка Бара выбора
-        TabsAdapter adapter = new TabsAdapter(this,getSupportFragmentManager());//Обработчик выбора
-        adapter.addFragment(diskInfoFragment,"TEST");
+        adapter = new TabsAdapter(this,getSupportFragmentManager());//Обработчик выбора
+        adapter.addFragment(diskInfoFragment,"Disk");
          adapter.addFragment(consoleFragment,"CONSOLE");
+         adapter.addFragment(fileManagerFragment,"FILES");
         //adapter.addFragment(toDoFragment,getString(R.string.todo_string));//Example fragment - просто xml разметка
 //        adapter.addFragment(new AbstractFragment(),getString(R.string.todo_string));
 //        adapter.addFragment(new AbstractFragment(),getString(R.string.ideas_string));
 //        adapter.addFragment(new AbstractFragment(),getString(R.string.birthday_string));
         viewPager.setAdapter(adapter);
+
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -54,6 +62,9 @@ public class ServerInfoActivity extends AppCompatActivity {
     protected void setConsoleLog(String log){
         consoleFragment.addLog(log);
     }
+    protected void setFiles(String log){
+        fileManagerFragment.setFiles(log);
+    }
 
     private void setServerInfo(){
         Intent intent=getIntent();
@@ -61,7 +72,7 @@ public class ServerInfoActivity extends AppCompatActivity {
                 intent.getStringExtra("HOST"),
                 intent.getStringExtra("PORT"),
                 intent.getStringExtra("PASSWORD"),
-                "");
+                "","");
 
     }
 
@@ -76,8 +87,17 @@ public class ServerInfoActivity extends AppCompatActivity {
             public void run() {
                 try {
                     chatClient.watchForConnectionInput();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Toast toast=Toast.makeText(getApplicationContext(),"No connection",Toast.LENGTH_LONG);
+                    toast.show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent=new Intent(getApplicationContext(),ServerListActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
                 }
             }
         };
@@ -97,7 +117,10 @@ public class ServerInfoActivity extends AppCompatActivity {
 
             try {
                 try {
+
                     client = new Socket("192.168.0.50", 9000);  //connect to server
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -137,6 +160,46 @@ public class ServerInfoActivity extends AppCompatActivity {
 
         return "";
     }
+    protected String execFilesCommand(final String command){
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatClient.watchForConsoleInput("/filesExe "+command);
+            }
+        });
+        thread.start();
+
+        return "";
+    }
+
+    public ServerInfo getServerInfo() {
+        return serverInfo;
+    }
 
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatClient.closeConnection();
+            }
+        });
+        thread.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem()==2){
+            boolean result = ((FileManagerFragment)adapter.getItem(2)).onBackPressed();
+            if (!result){
+                super.onBackPressed();
+            }
+            return;
+        }
+        super.onBackPressed();
+
+    }
 }

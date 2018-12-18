@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 public class InfoClient {
     private final Pattern p = Pattern.compile("^\\/([^\\s]*)\\s?(?:\\[([^\\]]*)\\])?\\s*(.*)$");
     private Socket socket;
+    private  boolean watch;
     private final String TAG="CLIENT";
     private String username="";
     private ServerInfo serverInfo;
@@ -65,8 +66,9 @@ public class InfoClient {
 
 
     public void watchForConnectionInput() throws IOException {
+        watch=true;
         BufferedReader reader= new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        while (true){
+        while (watch){
             String message = reader.readLine();
             Log.d(TAG, "watchForConnectionInput: "+message);
             if (!message.equals("")){
@@ -116,6 +118,21 @@ public class InfoClient {
                                 mainActivity.setConsoleLog(command.Body);
                             }
                         });
+                        break;
+                    case "postFilesExe":
+                        mainActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mainActivity.setFiles(command.Body);
+                            }
+                        });
+                        break;
+                    case "remove":
+                        watch=false;
+                        socket.close();
+                        break;
+
+
 
 
                     case "message":
@@ -172,6 +189,10 @@ public class InfoClient {
                         break;
                     case "exe":
                         sendCommand("exe",command.Body);
+                        break;
+                    case "filesExe" :
+                        sendCommand("filesExe",command.Body);
+                        break;
                 }
             }
         }
@@ -199,6 +220,8 @@ public class InfoClient {
                     return new Command("postDiskInfo",message.substring(message.indexOf("]")+2),"");
                 case 'E':
                     return new Command("postExe",message.substring(message.indexOf("]")+2),"");
+                case 'F':
+                    return new Command("postFilesExe",message.substring(message.indexOf("]")+2),"");
             }
 
         }
@@ -226,7 +249,10 @@ public class InfoClient {
         if (res[0].charAt(1) == 'e') {
                 String args = message.substring(message.indexOf(" ")+1);
                 return new Command("exe", args, username);
-            }
+        }else if (res[0].charAt(1) == 'f') {
+            String args = message.substring(message.indexOf(" ") + 1);
+            return new Command("filesExe", args, username);
+        }
             if (res[0].equals("/test")) {
                 return new Command(res[0].replace("/", ""), res[1].replace("\n", ""), username);
             } else if (!message.contains("/")) {
@@ -249,8 +275,16 @@ public class InfoClient {
     private void sendCommand(String command,String body){
         String message = String.format("/%s %s\n",command,body);
         Log.d(TAG, "SendCommand: "+message);
+        while (printWriter==null){
+            ;
+        }
         printWriter.write(message);
         printWriter.flush();
+    }
+
+    public void closeConnection(){
+        watch=false;
+        sendCommand("close","");
     }
 
 

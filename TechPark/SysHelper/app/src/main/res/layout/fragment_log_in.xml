@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="Email"
-                android:text="apriyma0@gmail.com"/>
+               />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
@@ -44,8 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"
-                android:text="knowledge123"/>
+                android:hint="Password" />
         </android.support.design.widget.TextInputLayout>
 
         <Button

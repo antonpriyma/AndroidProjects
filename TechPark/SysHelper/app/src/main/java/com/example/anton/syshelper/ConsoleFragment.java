@@ -30,6 +30,7 @@ public class ConsoleFragment extends AbstractFragment{
 //                    currienttext.append("\n").append(editText.getText().toString());
 //                    commandLog.setText(currienttext);
                     activity.execCommand(editText.getText().toString());
+                    editText.setText("");
 
                     break;
             }
@@ -46,9 +47,7 @@ public class ConsoleFragment extends AbstractFragment{
         this.context = context;
     }
 
-    //public void setData(List<RemindDTO> data) {
-    // this.data = data;
-    //}
+
 
     public static ConsoleFragment getInstance(Context context) {
         Bundle args = new Bundle();
@@ -82,9 +81,6 @@ public class ConsoleFragment extends AbstractFragment{
         super.onActivityCreated(savedInstanceState);
         View view = getView();
         activity=(ServerInfoActivity)getActivity();
-        //Console console=view.findViewById(R.id.console);
-//        Console console=new Console();
-       // Console.write("Test");
     }
 
     @Override
@@ -93,5 +89,8 @@ public class ConsoleFragment extends AbstractFragment{
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }
