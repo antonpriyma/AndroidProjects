@@ -1,13 +1,17 @@
 package com.example.anton.syshelper;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -24,11 +28,19 @@ public class ServerInfoActivity extends AppCompatActivity {
     private  TabsAdapter adapter;
     ServerInfo serverInfo;
 
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_server_info);
+        android.support.v7.widget.Toolbar toolbar=findViewById(R.id.server_info_toolbar);
+        setSupportActionBar(toolbar);
+       // getSupportActionBar().setWindowTitle("test");
+
         setServerInfo();
+        getSupportActionBar().setTitle(serverInfo.getName());
         chatClient=new InfoClient();
         new AsyncRequest().execute();
         initTabs();
@@ -68,7 +80,6 @@ public class ServerInfoActivity extends AppCompatActivity {
                 intent.getStringExtra("PORT"),
                 intent.getStringExtra("PASSWORD"),
                 "","");
-
     }
 
     private void service(){
@@ -113,7 +124,7 @@ public class ServerInfoActivity extends AppCompatActivity {
             try {
                 try {
 
-                    client = new Socket("192.168.0.50", 9000);  //connect to server
+                    client = new Socket("192.168.43.67", 9000);  //connect to server
 
                 } catch (IOException e) {
                     e.printStackTrace();
