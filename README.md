@@ -1,20 +1,20 @@
 # Android Projects
 
-Here is all my Android studies
+	Here is all my Android studies
 
 
-### HeadFirst
+* ### HeadFirst
 
-All tasks end examples from HeadFirst book
+		All tasks end examples from HeadFirst book
 
-### TechPark
+* ### TechPark
 
-All tasks end examples from TechPark, including Simple chat with **Golang** server.
+		All tasks end examples from TechPark, including Simple chat with **Golang** server.
 
-### RemindMe
+* ### RemindMe
 
-Simple Remind app.
-### What?
+		Simple Remind app.
+* ### What?
 
-Other trash
+		Other trash
 
